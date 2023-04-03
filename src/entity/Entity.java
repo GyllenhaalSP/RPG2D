@@ -3,8 +3,8 @@ package entity;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-    public int x;
-    public int y;
+    public int worldX;
+    public int worldY;
     public int speed;
 
     public BufferedImage up1;
@@ -15,6 +15,9 @@ public class Entity {
     public BufferedImage left2;
     public BufferedImage right1;
     public BufferedImage right2;
+
+    public int spriteCounter = 0;
+    public int spriteNum = 1;
 
     public String direction;
 
