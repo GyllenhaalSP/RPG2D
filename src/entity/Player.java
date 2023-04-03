@@ -22,6 +22,9 @@ public class Player extends Entity{
         this.keyH = keyH;
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
+
+        solidArea = new Rectangle(8, 15, 32, 32);
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -55,18 +58,30 @@ public class Player extends Entity{
     }
 
     public void move(){
-        if (keyH.upPressed) {
+        // CHECK TILE COLLISION
+        collisionON = false;
+        gp.collisionChecker.checkTile(this);
+
+        if (keyH.upPressed){
             direction = "up";
-            worldY -= speed;
-        } else if (keyH.downPressed) {
+            if (!collisionON){
+                worldY -= speed;
+            }
+        } else if (keyH.downPressed){
             direction = "down";
-            worldY += speed;
-        } else if (keyH.leftPressed) {
+            if (!collisionON){
+                worldY += speed;
+            }
+        } else if (keyH.leftPressed){
             direction = "left";
-            worldX -= speed;
-        } else if (keyH.rightPressed) {
+            if (!collisionON){
+                worldX -= speed;
+            }
+        } else if (keyH.rightPressed){
             direction = "right";
-            worldX += speed;
+            if (!collisionON){
+                worldX += speed;
+            }
         }
 
         spriteCounter++;
@@ -100,8 +115,7 @@ public class Player extends Entity{
         }
 
         g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
-
-
-
+        // COLLISION RECTANGLE DEBUG
+        //g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }
