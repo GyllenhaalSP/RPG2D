@@ -24,6 +24,8 @@ public class Player extends Entity{
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
         solidArea = new Rectangle(8, 15, 32, 32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -61,6 +63,9 @@ public class Player extends Entity{
         // CHECK TILE COLLISION
         collisionON = false;
         gp.collisionChecker.checkTile(this);
+
+        //CHECK OBJECT COLLISION
+        int objIndex = gp.collisionChecker.checkObject(this, true);
 
         if (keyH.upPressed){
             direction = "up";
