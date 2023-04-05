@@ -79,7 +79,9 @@ public class CollisionChecker {
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                             System.out.println("Collision detected UP");
                             entity.collisionON = true;
-                            index = i;
+                            if(player){
+                                index = i;
+                            }
                         }
                     }
                     case "down" -> {
@@ -87,7 +89,9 @@ public class CollisionChecker {
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                             System.out.println("Collision detected DOWN");
                             entity.collisionON = true;
-                            index = i;
+                            if(player){
+                                index = i;
+                            }
                         }
                     }
                     case "left" -> {
@@ -95,7 +99,9 @@ public class CollisionChecker {
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                             System.out.println("Collision detected LEFT");
                             entity.collisionON = true;
-                            index = i;
+                            if(player){
+                                index = i;
+                            }
                         }
                     }
                     case "right" -> {
@@ -103,7 +109,9 @@ public class CollisionChecker {
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
                             System.out.println("Collision detected RIGHT");
                             entity.collisionON = true;
-                            index = i;
+                            if(player){
+                                index = i;
+                            }
                         }
                     }
                 }
