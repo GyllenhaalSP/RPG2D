@@ -21,17 +21,19 @@ public class GamePanel extends JPanel implements Runnable {
     //WORLD SETTINGS
     public final int MAX_WORLD_COL = 50;
     public final int MAX_WORLD_ROW = 50;
-    public final int WORLD_WIDTH = MAX_WORLD_COL * TILE_SIZE; //2400 pixels
-    public final int WORLD_HEIGHT = MAX_WORLD_ROW * TILE_SIZE; //2400 pixels
 
     // FPS
     int fps = 60;
 
+    //SYSTEM
     TileManager tileManager = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
+    Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
+    Thread gameThread;
+
+    // ENTITY AND OBJECT
     public Player player = new Player(this, keyHandler);
     public SuperObject[] obj = new SuperObject[10];
 
@@ -45,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         assetSetter.setObject();
+        playMusic(0);
     }
 
     public void startGameThread() {
@@ -115,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= nanoSecond) {
-                System.out.println("FPS: " + drawCount);
+                //System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -129,16 +132,34 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
         // TILE
         tileManager.drawWorld(g2);
+
         // OBJECT
         for (SuperObject superObject : obj) {
             if (superObject != null) {
                 superObject.draw(g2, this);
             }
         }
+
         //PLAYER
         player.draw(g2);
         g2.dispose();
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 }
