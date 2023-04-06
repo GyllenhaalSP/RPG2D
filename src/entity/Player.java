@@ -16,6 +16,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+    int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -66,7 +67,9 @@ public class Player extends Entity{
 
         //CHECK OBJECT COLLISION
         int objIndex = gp.collisionChecker.checkObject(this, true);
+        pickUpObject(objIndex);
 
+        //IF COLLISION IS FALSE, PLAYER CAN MOVE
         if (keyH.upPressed){
             direction = "up";
             if (!collisionON){
@@ -94,6 +97,33 @@ public class Player extends Entity{
             if(spriteNum == 1) spriteNum = 2;
             else if(spriteNum == 2) spriteNum = 1;
             spriteCounter = 0;
+        }
+    }
+
+    public void pickUpObject(int index){
+        if (index != 999){
+            String objectName = gp.obj[index].name;
+            switch(objectName){
+                case "Key" -> {
+                    gp.playSE(1);
+                    hasKey++;
+                    gp.obj[index] = null;
+                    System.out.println("You have " + hasKey + " keys");
+                }
+                case "Door" -> {
+                    if (hasKey > 0){
+                        gp.playSE(3);
+                        gp.obj[index] = null;
+                        hasKey--;
+                        System.out.println("You have " + hasKey + " keys");
+                    }
+                }
+                case "Boots" -> {
+                    gp.playSE(2);
+                    speed += 2;
+                    gp.obj[index] = null;
+                }
+            }
         }
     }
 
