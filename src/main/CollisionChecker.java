@@ -77,7 +77,7 @@ public class CollisionChecker {
                     case "up" -> {
                         entity.solidArea.y -= entity.speed;
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
-                            System.out.println("Collision detected UP");
+                            //System.out.println("Collision detected UP");
                             entity.collisionON = true;
                             if(player){
                                 index = i;
@@ -87,7 +87,7 @@ public class CollisionChecker {
                     case "down" -> {
                         entity.solidArea.y += entity.speed;
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
-                            System.out.println("Collision detected DOWN");
+                            //System.out.println("Collision detected DOWN");
                             entity.collisionON = true;
                             if(player){
                                 index = i;
@@ -97,7 +97,7 @@ public class CollisionChecker {
                     case "left" -> {
                         entity.solidArea.x -= entity.speed;
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
-                            System.out.println("Collision detected LEFT");
+                            //System.out.println("Collision detected LEFT");
                             entity.collisionON = true;
                             if(player){
                                 index = i;
@@ -107,7 +107,7 @@ public class CollisionChecker {
                     case "right" -> {
                         entity.solidArea.x += entity.speed;
                         if(entity.solidArea.intersects(gp.obj[i].solidArea)){
-                            System.out.println("Collision detected RIGHT");
+                            //System.out.println("Collision detected RIGHT");
                             entity.collisionON = true;
                             if(player){
                                 index = i;
