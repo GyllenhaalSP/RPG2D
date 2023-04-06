@@ -19,22 +19,22 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
         if(code == KeyEvent.VK_UP || code == KeyEvent.VK_W) {
             upPressed = true;
-            System.out.println("UP");
+            //System.out.println("UP");
         }
 
         if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
             downPressed = true;
-            System.out.println("DOWN");
+            //System.out.println("DOWN");
         }
 
         if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A) {
             leftPressed = true;
-            System.out.println("LEFT");
+            //System.out.println("LEFT");
         }
 
         if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
             rightPressed = true;
-            System.out.println("RIGHT");
+            //System.out.println("RIGHT");
         }
     }
 
