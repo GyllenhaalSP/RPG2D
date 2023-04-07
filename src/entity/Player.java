@@ -108,20 +108,30 @@ public class Player extends Entity{
                     gp.playSoundEffect(1);
                     hasKey++;
                     gp.obj[index] = null;
-                    System.out.println("You have " + hasKey + " keys");
+                    gp.ui.showMessage("You got a key!");
+
                 }
                 case "Door" -> {
                     if (hasKey > 0){
                         gp.playSoundEffect(3);
                         gp.obj[index] = null;
                         hasKey--;
-                        System.out.println("You have " + hasKey + " keys");
+                        gp.ui.showMessage("You opened the door!");
+                    } else {
+                        gp.ui.showMessage("You need a key to open this door!");
                     }
                 }
                 case "Boots" -> {
                     gp.playSoundEffect(2);
                     speed += 2;
                     gp.obj[index] = null;
+                    gp.ui.showMessage("You got some boots!\n Speed up!");
+                }
+                case "Chest" -> {
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSoundEffect(4);
+                    gp.ui.showMessage("You opened the chest!\n CONGRATULATIONS!");
                 }
             }
         }
