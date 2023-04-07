@@ -54,7 +54,7 @@ public class UI {
             y = gp.SCREEN_HEIGHT/2 - (gp.TILE_SIZE * 4);
             g2.drawString(text, x, y);
 
-            g2.setFont(arial80B);
+            g2.setFont(arial70B);
             g2.setColor(Color.YELLOW);
             text = "CONGRATULATIONS!";
             textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
