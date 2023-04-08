@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,18 +41,27 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage(){
-        try {
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
-        } catch (IOException e) {
+        up1 = setup("boy_up_1");
+        up2 = setup("boy_up_2");
+        down1 = setup("boy_down_1");
+        down2 = setup("boy_down_1");
+        left1 = setup("boy_left_1");
+        left2 = setup("boy_left_1");
+        right1 = setup("boy_right_1");
+        right2 = setup("boy_right_1");
+    }
+
+    public BufferedImage setup(String imageName){
+        UtilityTools utilityTools = new UtilityTools();
+        BufferedImage image = null;
+
+        try{
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName + ".png")));
+            image = utilityTools.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+        }catch (IOException e){
             e.printStackTrace();
         }
+        return image;
     }
 
     public void update() {
@@ -159,7 +169,7 @@ public class Player extends Entity{
             }
         }
 
-        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+        g2.drawImage(image, screenX, screenY, null);
         // COLLISION RECTANGLE DEBUG
         //g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
