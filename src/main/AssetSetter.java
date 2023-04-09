@@ -1,10 +1,5 @@
 package main;
 
-import object.OBJ_Chest;
-import object.OBJ_Door;
-import object.OBJ_Key;
-import object.OBJ_Boots;
-
 public class AssetSetter {
     GamePanel gp;
 
