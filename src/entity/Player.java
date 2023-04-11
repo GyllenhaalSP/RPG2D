@@ -10,13 +10,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Player extends Entity{
-
-    GamePanel gp;
-    KeyHandler keyH;
+public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
+    GamePanel gp;
+    KeyHandler keyH;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -32,14 +31,14 @@ public class Player extends Entity{
         getPlayerImage();
     }
 
-    public void setDefaultValues(){
+    public void setDefaultValues() {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
         speed = 5;
         direction = "down";
     }
 
-    public void getPlayerImage(){
+    public void getPlayerImage() {
         up1 = setup("boy_up_1");
         up2 = setup("boy_up_2");
         down1 = setup("boy_down_1");
@@ -50,26 +49,26 @@ public class Player extends Entity{
         right2 = setup("boy_right_2");
     }
 
-    public BufferedImage setup(String imageName){
+    public BufferedImage setup(String imageName) {
         UtilityTools utilityTools = new UtilityTools();
         BufferedImage image = null;
 
-        try{
+        try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName + ".png")));
             image = utilityTools.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return image;
     }
 
     public void update() {
-        if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed){
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
             move();
         }
     }
 
-    public void move(){
+    public void move() {
         // CHECK TILE COLLISION
         collisionON = false;
         gp.collisionChecker.checkTile(this);
@@ -79,38 +78,38 @@ public class Player extends Entity{
         pickUpObject(objIndex);
 
         //IF COLLISION IS FALSE, PLAYER CAN MOVE
-        if (keyH.upPressed){
+        if (keyH.upPressed) {
             direction = "up";
-            if (!collisionON){
+            if (!collisionON) {
                 worldY -= speed;
             }
-        } else if (keyH.downPressed){
+        } else if (keyH.downPressed) {
             direction = "down";
-            if (!collisionON){
+            if (!collisionON) {
                 worldY += speed;
             }
-        } else if (keyH.leftPressed){
+        } else if (keyH.leftPressed) {
             direction = "left";
-            if (!collisionON){
+            if (!collisionON) {
                 worldX -= speed;
             }
-        } else if (keyH.rightPressed){
+        } else if (keyH.rightPressed) {
             direction = "right";
-            if (!collisionON){
+            if (!collisionON) {
                 worldX += speed;
             }
         }
 
         spriteCounter++;
-        if(spriteCounter > 15){
-            if(spriteNum == 1) spriteNum = 2;
-            else if(spriteNum == 2) spriteNum = 1;
+        if (spriteCounter > 15) {
+            if (spriteNum == 1) spriteNum = 2;
+            else if (spriteNum == 2) spriteNum = 1;
             spriteCounter = 0;
         }
     }
 
-    public void pickUpObject(int index){
-        if (index != 999){
+    public void pickUpObject(int index) {
+        if (index != 999) {
 
         }
     }

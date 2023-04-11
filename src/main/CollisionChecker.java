@@ -10,7 +10,7 @@ public class CollisionChecker {
         this.gp = gp;
     }
 
-    public void checkTile(Entity entity){
+    public void checkTile(Entity entity) {
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
         int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
         int entityTopWorldY = entity.worldY + entity.solidArea.y;
@@ -24,7 +24,7 @@ public class CollisionChecker {
         int tileNum1;
         int tileNum2;
 
-        switch(entity.direction) {
+        switch (entity.direction) {
             case "up" -> {
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.TILE_SIZE;
                 tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
@@ -60,11 +60,11 @@ public class CollisionChecker {
         }
     }
 
-    public int checkObject(Entity entity, boolean player){
+    public int checkObject(Entity entity, boolean player) {
         int index = 999;
 
         for (int i = 0; i < gp.obj.length; i++) {
-            if (gp.obj[i] != null){
+            if (gp.obj[i] != null) {
                 // Get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -73,43 +73,43 @@ public class CollisionChecker {
                 gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
                 gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
 
-                switch(entity.direction){
+                switch (entity.direction) {
                     case "up" -> {
                         entity.solidArea.y -= entity.speed;
-                        if(entity.solidArea.intersects(gp.obj[i].solidArea)){
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
                             //System.out.println("Collision detected UP");
                             entity.collisionON = true;
-                            if(player){
+                            if (player) {
                                 index = i;
                             }
                         }
                     }
                     case "down" -> {
                         entity.solidArea.y += entity.speed;
-                        if(entity.solidArea.intersects(gp.obj[i].solidArea)){
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
                             //System.out.println("Collision detected DOWN");
                             entity.collisionON = true;
-                            if(player){
+                            if (player) {
                                 index = i;
                             }
                         }
                     }
                     case "left" -> {
                         entity.solidArea.x -= entity.speed;
-                        if(entity.solidArea.intersects(gp.obj[i].solidArea)){
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
                             //System.out.println("Collision detected LEFT");
                             entity.collisionON = true;
-                            if(player){
+                            if (player) {
                                 index = i;
                             }
                         }
                     }
                     case "right" -> {
                         entity.solidArea.x += entity.speed;
-                        if(entity.solidArea.intersects(gp.obj[i].solidArea)){
+                        if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
                             //System.out.println("Collision detected RIGHT");
                             entity.collisionON = true;
-                            if(player){
+                            if (player) {
                                 index = i;
                             }
                         }
@@ -120,7 +120,7 @@ public class CollisionChecker {
                 gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;
                 gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
             }
-            
+
         }
 
         return index;

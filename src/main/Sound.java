@@ -9,7 +9,7 @@ public class Sound {
     Clip clip;
     URL[] soundURL = new URL[30];
 
-    public Sound(){
+    public Sound() {
         soundURL[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
         soundURL[1] = getClass().getResource("/sound/coin.wav");
         soundURL[2] = getClass().getResource("/sound/powerup.wav");
@@ -18,11 +18,11 @@ public class Sound {
     }
 
     public void setFile(int i) {
-        try{
+        try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

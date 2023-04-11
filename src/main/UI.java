@@ -4,19 +4,18 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class UI {
+    public boolean messageOn = false;
+    public String message = "";
+    public boolean gameFinished = false;
     GamePanel gp;
     Graphics2D g2;
     Font arial40;
     Font arial70B;
-    public boolean messageOn = false;
-    public String message = "";
     int messageTimer = 0;
-    public boolean gameFinished = false;
-
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
-    public UI(GamePanel gp){
+    public UI(GamePanel gp) {
         this.gp = gp;
         arial40 = new Font("Arial", Font.PLAIN, 40);
         arial70B = new Font("Arial", Font.BOLD, 70);
@@ -32,16 +31,16 @@ public class UI {
         g2.setFont(arial40);
         g2.setColor(Color.WHITE);
 
-        if(gp.gameState == gp.playState){
+        if (gp.gameState == gp.playState) {
             //playState stuff
         }
 
-        if(gp.gameState == gp.pauseState){
+        if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
     }
 
-    public void drawPauseScreen(){
+    public void drawPauseScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
         String text = "PAUSED";
         int x = getXForCenteredText(text);
@@ -51,7 +50,7 @@ public class UI {
 
     }
 
-    public int getXForCenteredText(String text){
+    public int getXForCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.SCREEN_WIDTH / 2 - length / 2;
     }
