@@ -14,11 +14,10 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    GamePanel gp;
     KeyHandler keyH;
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
@@ -39,27 +38,14 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setup("boy_up_1");
-        up2 = setup("boy_up_2");
-        down1 = setup("boy_down_1");
-        down2 = setup("boy_down_2");
-        left1 = setup("boy_left_1");
-        left2 = setup("boy_left_2");
-        right1 = setup("boy_right_1");
-        right2 = setup("boy_right_2");
-    }
-
-    public BufferedImage setup(String imageName) {
-        UtilityTools utilityTools = new UtilityTools();
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName + ".png")));
-            image = utilityTools.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
+        up1 = setup("/player/boy_up_1");
+        up2 = setup("/player/boy_up_2");
+        down1 = setup("/player/boy_down_1");
+        down2 = setup("/player/boy_down_2");
+        left1 = setup("/player/boy_left_1");
+        left2 = setup("/player/boy_left_2");
+        right1 = setup("/player/boy_right_1");
+        right2 = setup("/player/boy_right_2");
     }
 
     public void update() {
@@ -76,6 +62,10 @@ public class Player extends Entity {
         //CHECK OBJECT COLLISION
         int objIndex = gp.collisionChecker.checkObject(this, true);
         pickUpObject(objIndex);
+
+        // CHECK NPC COLLISION
+        int npcIndex = gp.collisionChecker.checkEntity(this, gp.npcs);
+        interactNPC(npcIndex);
 
         //IF COLLISION IS FALSE, PLAYER CAN MOVE
         if (keyH.upPressed) {
@@ -111,6 +101,12 @@ public class Player extends Entity {
     public void pickUpObject(int index) {
         if (index != 999) {
 
+        }
+    }
+
+    public void interactNPC(int index) {
+        if (index != 999) {
+            System.out.println("You are hitting an NPC!");
         }
     }
 
