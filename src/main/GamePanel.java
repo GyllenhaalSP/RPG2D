@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -10,11 +11,13 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable {
     public final int MAX_SCREEN_COL = 16;
     public final int MAX_SCREEN_ROW = 12;
+
     //WORLD SETTINGS
     public final int MAX_WORLD_COL = 50;
     public final int MAX_WORLD_ROW = 50;
     public final int playState = 1;
     public final int pauseState = 2;
+
     //SCREEN SETTINGS
     final int ORIGINAL_TILE_SIZE = 16; //16x16 pixels
     final int SCALE = 3;
@@ -24,14 +27,19 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public UI ui = new UI(this);
-    public SuperObject[] obj = new SuperObject[10];
+
     // GAME STATE
     public int gameState = 0;
+    public SuperObject[] obj = new SuperObject[10];
+    public Entity[] npcs = new Entity[10];
+
     // FPS
     int fps = 60;
+
     //SYSTEM
     TileManager tileManager = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler(this);
+
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyHandler);
     Sound music = new Sound();
@@ -48,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         assetSetter.setObject();
+        assetSetter.setNPC();
         playMusic(0);
         gameState = playState;
     }
@@ -129,7 +138,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         if (gameState == playState) {
+            // PLAYER
             player.update();
+            // NPC
+            for (Entity npc : npcs) {
+                if (npc != null) {
+                    npc.update();
+                }
+            }
         }
 
         if (gameState == pauseState) {
@@ -147,7 +163,6 @@ public class GamePanel extends JPanel implements Runnable {
             drawStart = System.nanoTime();
         }
 
-
         // TILES
         tileManager.drawWorld(g2);
 
@@ -155,6 +170,13 @@ public class GamePanel extends JPanel implements Runnable {
         for (SuperObject superObject : obj) {
             if (superObject != null) {
                 superObject.draw(g2, this);
+            }
+        }
+
+        // NPC
+        for (Entity npc : npcs) {
+            if (npc != null) {
+                npc.draw(g2);
             }
         }
 
@@ -186,8 +208,7 @@ public class GamePanel extends JPanel implements Runnable {
         music.stop();
     }
 
-    public void
-    playSoundEffect(int i) {
+    public void playSoundEffect(int i) {
         effect.setFile(i);
         effect.play();
     }
