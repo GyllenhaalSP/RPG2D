@@ -24,7 +24,5 @@ public class SuperObject {
         if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX && worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX && worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY && worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
             g2.drawImage(image, screenX, screenY, null);
         }
-
-
     }
 }
