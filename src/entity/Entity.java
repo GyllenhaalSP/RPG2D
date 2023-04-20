@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Entity {
+    GamePanel gp;
     public int worldX;
     public int worldY;
     public int speed;
@@ -24,12 +25,13 @@ public class Entity {
     public String direction;
     public int spriteCounter = 0;
     public int spriteNum = 1;
-    public Rectangle solidArea = new Rectangle(8, 15, 32, 32);
+    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public int solidAreaDefaultX;
     public int solidAreaDefaultY;
     public boolean collisionON = false;
     public int actionLockCounter = 0;
-    GamePanel gp;
+    String[] dialogues = new String[20];
+    int dialogueIndex = 0;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -37,6 +39,21 @@ public class Entity {
 
     public void setAction() {
 
+    }
+
+    public void speak(){
+        if(dialogues[dialogueIndex] == null) {
+            dialogueIndex = 0;
+        }
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex++;
+
+        switch(gp.player.direction){
+            case "up" -> direction = "down";
+            case "down" -> direction = "up";
+            case "left" -> direction = "right";
+            case "right" -> direction = "left";
+        }
     }
 
     public void update() {
