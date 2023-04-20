@@ -15,8 +15,6 @@ public class GamePanel extends JPanel implements Runnable {
     //WORLD SETTINGS
     public final int MAX_WORLD_COL = 50;
     public final int MAX_WORLD_ROW = 50;
-    public final int playState = 1;
-    public final int pauseState = 2;
 
     //SCREEN SETTINGS
     final int ORIGINAL_TILE_SIZE = 16; //16x16 pixels
@@ -30,6 +28,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     // GAME STATE
     public int gameState = 0;
+    public final int playState = 1;
+    public final int pauseState = 2;
+    public final int dialogueState = 3;
     public SuperObject[] obj = new SuperObject[10];
     public Entity[] npcs = new Entity[10];
 
@@ -38,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //SYSTEM
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyHandler);
