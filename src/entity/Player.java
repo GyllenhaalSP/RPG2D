@@ -11,6 +11,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     KeyHandler keyH;
+    int standCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -45,12 +46,29 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed || keyH.spacePressed){
             move();
+        }else{
+            standCounter++;
+            if(standCounter == 20){
+                spriteNum = 1;
+                standCounter = 0;
+            }
         }
     }
 
     public void move() {
+
+        if (keyH.upPressed) {
+            direction = "up";
+        } else if (keyH.downPressed) {
+            direction = "down";
+        } else if (keyH.leftPressed) {
+            direction = "left";
+        } else if (keyH.rightPressed) {
+            direction = "right";
+        }
+
         // CHECK TILE COLLISION
         collisionON = false;
         gp.collisionChecker.checkTile(this);
@@ -64,32 +82,25 @@ public class Player extends Entity {
         interactNPC(npcIndex);
 
         //IF COLLISION IS FALSE, PLAYER CAN MOVE
-        if (keyH.upPressed) {
-            direction = "up";
-            if (!collisionON) {
-                worldY -= speed;
-            }
-        } else if (keyH.downPressed) {
-            direction = "down";
-            if (!collisionON) {
-                worldY += speed;
-            }
-        } else if (keyH.leftPressed) {
-            direction = "left";
-            if (!collisionON) {
-                worldX -= speed;
-            }
-        } else if (keyH.rightPressed) {
-            direction = "right";
-            if (!collisionON) {
-                worldX += speed;
+        if (!collisionON && !keyH.spacePressed){
+            switch (direction) {
+                case "up" -> worldY -= speed;
+                case "down" -> worldY += speed;
+                case "left" -> worldX -= speed;
+                case "right" -> worldX += speed;
             }
         }
 
+        gp.keyHandler.spacePressed = false;
+
         spriteCounter++;
         if (spriteCounter > 15) {
-            if (spriteNum == 1) spriteNum = 2;
-            else if (spriteNum == 2) spriteNum = 1;
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            }
+            else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
             spriteCounter = 0;
         }
     }
@@ -102,8 +113,12 @@ public class Player extends Entity {
 
     public void interactNPC(int index) {
         if (index != 999) {
-            System.out.println("You are hitting an NPC!");
+            if(gp.keyHandler.spacePressed){
+                gp.gameState = gp.dialogueState;
+                gp.npcs[index].speak();
+            }
         }
+        gp.keyHandler.spacePressed = false;
     }
 
     public void draw(Graphics2D g2) {
