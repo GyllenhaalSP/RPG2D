@@ -38,6 +38,7 @@ public class UI {
         this.g2 = g2;
         g2.setFont(maruMonica);
         //g2.setFont(purisa);
+        //g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
 
         //PLAY STATE
