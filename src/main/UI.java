@@ -14,6 +14,8 @@ public class UI {
     int messageTimer = 0;
     public boolean gameFinished = false;
     public String currentDialogue = "";
+    public int commandNumber = 0;
+    public int titleScreenState = 0; // 0: the first screen, 1: the second screen
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -41,6 +43,11 @@ public class UI {
         //g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
 
+        //TITLE STATE
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
+
         //PLAY STATE
         if (gp.gameState == gp.playState) {
             //playState stuff
@@ -53,6 +60,65 @@ public class UI {
         if(gp.gameState == gp.dialogueState) {
             drawDialogueScreen();
         }
+    }
+
+    public void drawTitleScreen(){
+        if(titleScreenState == 0){
+            g2.setColor(new Color(70, 120, 80));
+            g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+            //TITLE NAME
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 94F));
+            String text = "BLUE BOY ADVENTURE";
+            int x = getXForCenteredText(text);
+            int y = gp.TILE_SIZE * 3;
+
+            // SHADOW
+            g2.setColor(Color.GRAY);
+            g2.drawString(text, x+5, y+5);
+
+            // MAIN COLOR
+            g2.setColor(Color.WHITE);
+            g2.drawString(text, x, y);
+
+            // BLUE BOY IMAGE
+            x = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE*2)/2;
+            y += gp.TILE_SIZE * 2;
+            g2.drawImage(gp.player.down1, x, y, gp.TILE_SIZE*2, gp.TILE_SIZE*2, null);
+
+            // MENU
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            text = "NEW GAME";
+            x = getXForCenteredText(text);
+            y += gp.TILE_SIZE * 4;
+            g2.drawString(text, x, y);
+            if(commandNumber == 0){
+                g2.drawString(">", x - gp.TILE_SIZE, y);
+            }
+
+            text = "LOAD GAME";
+            x = getXForCenteredText(text);
+            y += gp.TILE_SIZE;
+            g2.drawString(text, x, y);
+
+            if(commandNumber == 1){
+                g2.drawString(">", x - gp.TILE_SIZE, y);
+            }
+
+            text = "QUIT";
+            x = getXForCenteredText(text);
+            y += gp.TILE_SIZE;
+            g2.drawString(text, x, y);
+
+            if(commandNumber == 2){
+                g2.drawString(">", x - gp.TILE_SIZE, y);
+            }
+
+        }else if (titleScreenState == 1){
+
+        }
+
+
     }
 
     public void drawPauseScreen() {

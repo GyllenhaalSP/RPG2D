@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {
     public boolean rightPressed;
     public boolean spacePressed;
     GamePanel gp;
+
     // DEBUG
     boolean checkDrawTime = false;
 
@@ -25,6 +26,33 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+
+        // TITLE STATE
+        if (gp.gameState == gp.titleState){
+
+            if (gp.ui.titleScreenState == 0) {
+                if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W) {
+                    gp.ui.commandNumber --;
+                    if(gp.ui.commandNumber < 0) gp.ui.commandNumber = 2;
+                }
+                if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
+                    gp.ui.commandNumber ++;
+                    if(gp.ui.commandNumber > 2) gp.ui.commandNumber = 0;
+                }
+                if(code == KeyEvent.VK_ENTER){
+                    if(gp.ui.commandNumber == 0){
+                        gp.gameState = gp.playState;
+                        gp.playMusic(0);
+                    }
+                    if(gp.ui.commandNumber == 1){
+                        //Add later
+                    }
+                    if(gp.ui.commandNumber == 2){
+                        System.exit(0);
+                    }
+                }
+            }
+        }
 
         //PLAY STATE
         if (gp.gameState == gp.playState){
@@ -55,7 +83,6 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-
         // PAUSE
         else if(gp.gameState == gp.pauseState){
             if (code == KeyEvent.VK_P) {
@@ -70,12 +97,10 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-
         // DEBUG
         if (code == KeyEvent.VK_T) {
             checkDrawTime = !checkDrawTime;
         }
-
     }
 
     @Override
@@ -96,6 +121,5 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
             rightPressed = false;
         }
-
     }
 }
